@@ -8,9 +8,32 @@ typedef struct{
    int posnow;
 } Token;
 
-boolean isNumber();
+boolean isNumber(string number)
+{
+    /*kamus*/
+    int p;//p adalah panjang
+    int i=0;
+    boolean f = true;
+    /*algoritma*/
+    p = strlen(number) - 1;
+    while(i <= p && f)
+    {
+        if(number[0] == '-')
+            f == true;
+        else if(isDigit(number[i]))
+            f == true;
+        else
+            f == false;
+    }
+    return f;
 
-boolean isSymbol();
+boolean isSymbol(char cc)
+{
+    /*kamus*/
+    
+    /*algoritma*/
+    return(cc == '+' || cc == '-' || cc == '*' || cc == '/' || cc =='^')
+}
 
 boolean isIdentifier();
 
