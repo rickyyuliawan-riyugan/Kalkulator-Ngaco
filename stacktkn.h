@@ -2,11 +2,12 @@
 /* deklarasi stack yang diimplementasi dengan tabel kontigu dan ukuran sama */
 /* TOP adalah alamat elemen puncak */
 /* Implementasi dalam bahasa C dengan alokasi statik */
-#ifndef STACKTKN_H
-#define STACKTKN_H
+#ifndef stacktkn_H
+#define stacktkn_H
 
 #include "boolean.h"
-#include "token.h"
+#include "TokenType.h"
+
 #define Nil 0
 #define MaxEl 100
 /* Nil adalah stack dengan elemen kosong . */
