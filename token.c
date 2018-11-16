@@ -8,7 +8,7 @@
 /* Apabila token berisi sebuah stop maka tok.sbl = 's' */
 
 /*Spek lainnya akan ditulis lebih lanjut di waktu yang lain, semoga yang ini cukup jelas */
-
+#include "stacktkn.h"
 typedef struct{
    int pos;
    char* text;
@@ -59,10 +59,10 @@ boolean isDigit(char ch)
 Token nextToken(string s, int position);
 /* Mengembalikan dan membaca token selanjutnya */
 
-ArrayOfToken tokenize(string s)
+Stack tokenize(string s)
 /* Mengembalikan sebuah ArrayOfToken dari hasil pembacaan token */
 {
-    Array tokens;
+    Stack tokens;
     int position = 0;
     Token tok;
     int i;
@@ -70,9 +70,7 @@ ArrayOfToken tokenize(string s)
     tokens.Neff = 0;
     while 1 {
         tok = nextToken(s, position);
-        i = tokens.Neff;
-        tokens.Mem[i];
-        token.Neff += 1;
+        Push(&tokens,tok);
         if isStop(){
             return tokens;
         }
