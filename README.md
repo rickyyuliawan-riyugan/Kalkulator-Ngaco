@@ -1,5 +1,5 @@
 # Kalkulator-Ngaco
-##Initialize
+## Initialize
 Open Terminal on folder
 
 Windows user
