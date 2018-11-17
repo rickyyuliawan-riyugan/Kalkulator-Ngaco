@@ -5,7 +5,7 @@
 typedef struct{
    int pos;
    char tkn;
-   double value;
+   float value;
 } Token;
 
 typedef struct{

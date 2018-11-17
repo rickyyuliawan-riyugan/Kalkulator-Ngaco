@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 boolean isNumber(Token tok)
 /* Mengembalikan 'true' apabila tok.tkn == "b" */
@@ -39,7 +40,7 @@ boolean isStop(Token tok)
     return tok.tkn == 'x';
 }
 
-Token number(char* text, int pos)
+Token number(char text[100], int pos)
 /* Mengembalikan Token dengan nilai tok.pos = pos, dan tok.tkn = "number" */
 {
     Token TTemp;
@@ -63,7 +64,7 @@ Token symbol(char text, int pos)
     return TTemp;
 }
 
-Token identifier(char *text, int pos)
+Token identifier(char text[100], int pos)
 /* Mengembalikan Token dengan nilai tok.pos = pos dan tok.tkn = "identifier" */
 {
     Token TTemp;
@@ -116,6 +117,7 @@ TokProcess nextToken(char s[100], int pos)
     if (pos == strlen(s)){
         Temp.toks = stop(pos);
         Temp.posnow = pos;
+        return Temp;
     }
     start = pos;
     ch = s[pos];
@@ -127,6 +129,7 @@ TokProcess nextToken(char s[100], int pos)
         strtemp[pos-start] = '\0';
         Temp.toks = identifier(strtemp,pos);
         Temp.posnow = pos;
+        return Temp;
     }
     if (isDigit(ch)){
         while ((pos < strlen(s)) && (isDigit(s[pos]))){
@@ -137,6 +140,7 @@ TokProcess nextToken(char s[100], int pos)
         strtemp[pos-start] = '\0';
         Temp.toks = number(strtemp,pos);
         Temp.posnow = pos;
+        return Temp;
     }
     Temp.toks = symbol(s[pos], start);
     Temp.posnow = pos+1;
@@ -147,9 +151,9 @@ Stack tokenize(char s[100])
 /* Mengembalikan sebuah StackOfToken dari hasil pembacaan token */
 {
     Stack tokens;
+    Stack revtokens;
     int position = 0;
     Token tok;
-    int i;
     TokProcess TP;
     
     do {
@@ -157,5 +161,9 @@ Stack tokenize(char s[100])
         Push(&tokens,TP.toks);
         position = TP.posnow;
     } while (isStop(TP.toks) == false);
-    return tokens;
+    while (!IsEmpty(tokens)){
+        Pop(&tokens,&tok);
+        Push(&revtokens,tok);
+    }
+    return revtokens;
 }

@@ -16,6 +16,7 @@
 #include "TokenType.h"
 #include "boolean.h"
 #include "stacktkn.h"
+#include <math.h>
 
 boolean isNumber(Token tok);
 /* Mengembalikan 'true' apabila tok.tkn == "b" */
@@ -29,13 +30,13 @@ boolean isIdentifier(Token tok);
 boolean isStop(Token tok);
 /* Mengembalikan 'true' apabila tok.tkn == "x" */
 
-Token number(char* text, int pos);
+Token number(char text[100], int pos);
 /* Mengembalikan Token dengan nilai tok.pos = pos, dan tok.tkn = "number" */
 
 Token symbol(char text, int pos);
 /* Mengembalikan Token dengan nilai  tok.pos = pos dan tok.tkn = "symbol" */
 
-Token identifier(char* text, int pos);
+Token identifier(char text[100], int pos);
 /* Mengembalikan Token dengan nilai tok.pos = pos dan tok.tkn = "identifier" */
 
 Token stop(int pos);
@@ -45,6 +46,7 @@ boolean isId(char ch);
 /* Mengembalikan 'true' jika ch adalah sebuah Identifier, lihat definisi Identifier diatas */
 
 boolean isId1(char ch);
+
 boolean isDigit(char ch);
 /* Mengembalikan 'true' jika ch adalah sebuah Digit, lihat definisi Digit diatas */
 

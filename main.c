@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include "parse.h"
+#include "token.h"
+#include <stdlib.h>
+#include "stacktkn.h"
 
 int main(){
-    char* hasil;
+    float hasil;
     char input[100];
     printf("Selamat Datang di Kalkulator Tubes\n");
     printf("Dibuat dengan segenap cinta oleh:\n");
@@ -13,12 +17,11 @@ int main(){
     do{
         printf("Input : ");
         scanf("%s", &input);
-        printf("%s\n", input);
         hasil = parse(input);
-        if hasil != "Error"{
-            printf("Hasil => %f", hasil);
-        } else {
-            printf("%s", hasil);
-        }
-    } while ((input != 'X')&&(input != "Exit"));
+        //if hasil != "Error"{
+        printf("Hasil = %g\n", hasil);
+        //} else {
+            //printf("%s", hasil);
+        //}
+    } while ((input != "X")&&(input != "Exit"));
 }

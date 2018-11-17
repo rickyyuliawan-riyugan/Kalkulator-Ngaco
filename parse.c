@@ -1,90 +1,111 @@
 #include <stdio.h>
 #include <string.h>
-#include "token.c"
+#include <stdlib.h>
+#include "stacktkn.h"
+#include "parse.h"
+#include "token.h"
+#include "boolean.h"
 #include <math.h>
 
-double parItem(Token *tok)
+float parseItem(Stack *tok)
 {
-    Token t = tok[0];
-    tok.pop(0);
-    if (isNumber(t))
-    {
-        return t.val;
+    Token t;
+    float expr;
+    Pop(tok,&t);
+    if (isNumber(t)){
+        return t.value;
     }
-    if (isIdentifie(t)){
-        return error;
+    if (isIdentifier(t)){
+        printf("Alphabet cant be entered\n"); 
+        exit(-1);
     }
-    if (!isSymbol(t,"(")){
-        return error;
+    if (isSymbol(t,'(') == false){
+        printf("SYNTAX ERROR\n"); 
+        exit(-1);
     }
-    expr = parseExpression();
-    if (!isSymbol(tok[0]),")"){
-        return error;
+    expr = parseExpr(tok);
+    if (isSymbol(InfoTop(*tok),')') == false){
+        printf("SYNTAX ERROR\n"); 
+        exit(-1);
     }
-    tok.pop[0];
+    Pop(tok,&t);
     return expr;
 }
 
-double parseFactor()
+float parseFactor(Stack *tok)
 {
-    Token t = tok[0];
-    if isSymbol("-"){
+    Token t;
+    int sign;
+    float result, rhs;
+
+    t = InfoTop(*tok);
+    if (isSymbol(t,'-')){
         sign = -1;
     } else {
         sign += 1;
     }
-    if isSymbol("+") || (sign < 0 ){
-        tok.pop[0];
+    if ((isSymbol(t,'+')) || (sign < 0 )){
+        Pop(tok, &t);
     }
-    result = parseItem();
-    while isSymbol("^"){
-        tok.pop[0];
-        rhs = parseFactor();
+    result = parseItem(tok);
+    while (isSymbol(InfoTop(*tok),'^')){
+        Pop(tok,&t);
+        rhs = parseFactor(tok);
         result = pow(result,rhs);
     }
     return sign*result;
 }
 
-double parseTerm()
+float parseTerm(Stack *tok)
 {
-    result = parseFactor();
-    t = tok[0];
-    while isSymbol("*") || isSymbol("/"){
-        tok.pop(0)
-        rhs = parseFactor(tok)
+    float result = parseFactor(tok);
+    float rhs;
+    Token t;
+    Token dummy;
+
+    t = InfoTop(*tok);
+    while (isSymbol(t,'*') || isSymbol(t,'/')){
+        Pop(tok,&dummy);
+        rhs = parseFactor(tok);
+        if (isSymbol(t,'/')){
+            result = result / rhs;
+        } else{
+            result = result * rhs;
+        }
+        t = InfoTop(*tok);
     }
-    if isSymbol("/"){
-        result = result / rhs;
-    } else{
-        result = result * rhs;
-    }
-    t = tok[0];
     return result;
 }
 
-double parseExpression()
-{
-    result = parseTerm(tok);
-    t = tok[0];
-    while t.isSymbol("+") || t.isSymbol("-"){
-        tok.pop(0);
-        rhs = parseTerm();
+float parseExpr(Stack *tok){
+    float result = parseTerm(tok);
+    Token t = InfoTop(*tok);
+    Token dummy;
+    float rhs;
+
+    while (isSymbol(t,'+') || isSymbol(t,'-')){
+        Pop(tok,&dummy);
+        rhs = parseTerm(tok);
+        if (isSymbol(t,'+')){
+            result = result + rhs;
+        } else {
+            result = result - rhs;
+        }
+        t = InfoTop(*tok);
     }
-    if isSymbol("+"){
-     result = result + rhs;
-    } else {
-        result = result - rhs;
-    }
-    t = tok[0];
     return result;
 }
 
-double parse(string s)
-{
-    toks = tokens.tokenize(s);
-    result = parse_expression(toks);
-    if not toks[0].isStop(){
-        return error;
+float parse(char s[100]){
+    Stack toks;
+    float result;
+
+    
+    toks = tokenize(s);
+    result = parseExpr(&toks);
+    if (!isStop(InfoTop(toks))){
+        printf("Empty Input, Exiting The Program....\n");
+        exit(0);
     }
     return result;
 }

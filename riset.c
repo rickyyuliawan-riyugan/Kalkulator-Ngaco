@@ -2,16 +2,13 @@
 #include <string.h>
 #include <math.h>
 #define NaN 0
-int fun(int *p);
+
 int main() {
-  int p = 4;
-  int k;
+  char s[100] = "123";
+  float f;
 
-  k = fun(&p);
-  printf("%d %d", p, k);
-}
-
-int fun(int *p){
-  *p++;
-  return 3;
+  f = atof(s);
+  int c = strlen(s);
+  printf("%d", c);
+  printf("%f", f);
 }
