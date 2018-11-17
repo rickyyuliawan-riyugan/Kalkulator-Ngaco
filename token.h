@@ -46,6 +46,7 @@ boolean isId(char ch);
 /* Mengembalikan 'true' jika ch adalah sebuah Identifier, lihat definisi Identifier diatas */
 
 boolean isId1(char ch);
+/* Mengembalikan 'true' jika ch adalah sebuah Identifier, lihat definisi Identifier diatas */
 
 boolean isDigit(char ch);
 /* Mengembalikan 'true' jika ch adalah sebuah Digit, lihat definisi Digit diatas */
