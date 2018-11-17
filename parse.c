@@ -75,7 +75,6 @@ float parseTerm(Stack *tok)
         if (isSymbol(t,'/')){
             if (rhs == 0){
                 printf("MATH ERROR\n");
-                
             }
             result = result / rhs;
         } else{
