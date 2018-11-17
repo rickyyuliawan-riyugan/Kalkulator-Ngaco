@@ -42,7 +42,7 @@ float parseFactor(Stack *tok)
     if (isSymbol(t,'-')){
         sign = -1;
     } else {
-        sign += 1;
+        sign = 1;
     }
     if ((isSymbol(t,'+')) || (sign < 0 )){
         Pop(tok, &t);
@@ -51,6 +51,10 @@ float parseFactor(Stack *tok)
     while (isSymbol(InfoTop(*tok),'^')){
         Pop(tok,&t);
         rhs = parseFactor(tok);
+        if ((ceil(rhs) != floor(rhs)) && (result < 0)){
+            printf("MATH ERROR\n");
+            exit(-1);
+        }
         result = pow(result,rhs);
     }
     return sign*result;
@@ -58,16 +62,21 @@ float parseFactor(Stack *tok)
 
 float parseTerm(Stack *tok)
 {
-    float result = parseFactor(tok);
+    float result;
     float rhs;
     Token t;
     Token dummy;
 
+    result = parseFactor(tok);
     t = InfoTop(*tok);
     while (isSymbol(t,'*') || isSymbol(t,'/')){
         Pop(tok,&dummy);
         rhs = parseFactor(tok);
         if (isSymbol(t,'/')){
+            if (rhs == 0){
+                printf("MATH ERROR\n");
+                
+            }
             result = result / rhs;
         } else{
             result = result * rhs;
@@ -87,6 +96,7 @@ float parseExpr(Stack *tok){
         Pop(tok,&dummy);
         rhs = parseTerm(tok);
         if (isSymbol(t,'+')){
+            //Bisa saja error;
             result = result + rhs;
         } else {
             result = result - rhs;
@@ -99,9 +109,14 @@ float parseExpr(Stack *tok){
 float parse(char s[100]){
     Stack toks;
     float result;
+    Token tok;
 
-    
+    CreateEmpty(&toks);
     toks = tokenize(s);
+    /*while (!IsEmpty(toks)){
+        Pop(&toks,&tok);
+        printf("%f\n", tok.value);
+    }*/
     result = parseExpr(&toks);
     if (!isStop(InfoTop(toks))){
         printf("Empty Input, Exiting The Program....\n");

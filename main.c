@@ -8,6 +8,7 @@
 int main(){
     float hasil;
     char input[100];
+
     printf("Selamat Datang di Kalkulator Tubes\n");
     printf("Dibuat dengan segenap cinta oleh:\n");
     printf("->13517007 Mohammad Ridwan Hady Arifin\n");
@@ -18,10 +19,6 @@ int main(){
         printf("Input : ");
         scanf("%s", &input);
         hasil = parse(input);
-        //if hasil != "Error"{
         printf("Hasil = %g\n", hasil);
-        //} else {
-            //printf("%s", hasil);
-        //}
     } while ((input != "X")&&(input != "Exit"));
 }

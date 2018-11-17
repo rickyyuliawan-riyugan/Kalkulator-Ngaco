@@ -155,7 +155,8 @@ Stack tokenize(char s[100])
     int position = 0;
     Token tok;
     TokProcess TP;
-    
+    CreateEmpty(&tokens);
+    CreateEmpty(&revtokens);
     do {
         TP = nextToken(s, position);
         Push(&tokens,TP.toks);
