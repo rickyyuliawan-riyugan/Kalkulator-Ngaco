@@ -14,11 +14,14 @@ int main(){
     printf("->13517007 Mohammad Ridwan Hady Arifin\n");
     printf("->13517025 Ricky Yuliawan\n");
     printf("->13517058 Ahmad Rizqee Nurhani\n\n");
+    printf("Enter 'X' or 'Exit' to Quit\n");
+    printf("And Oh yeah, kesalahan syntax atau math juga membuat program berhenti\n");
     
-    do{
+    scanf("%s", input);
+    while ((input != "X")&&(input != "Exit")){
         printf("Input : ");
-        scanf("%s", &input);
         hasil = parse(input);
         printf("Hasil = %g\n", hasil);
-    } while ((input != "X")&&(input != "Exit"));
+        scanf("%s", &input);
+    }
 }
