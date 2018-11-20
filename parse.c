@@ -44,7 +44,10 @@ float parseFactor(Stack *tok)
     } else {
         sign = 1;
     }
-    if ((isSymbol(t,'+')) || (sign < 0 )){
+    if (isSymbol(t,'+')){
+        printf("Syntax Error\n");
+        exit(-1);
+    } else if ( sign < 0 ){
         Pop(tok, &t);
     }
     result = parseItem(tok);
@@ -75,6 +78,7 @@ float parseTerm(Stack *tok)
         if (isSymbol(t,'/')){
             if (rhs == 0){
                 printf("MATH ERROR\n");
+                exit(-1);
             }
             result = result / rhs;
         } else{
@@ -95,7 +99,6 @@ float parseExpr(Stack *tok){
         Pop(tok,&dummy);
         rhs = parseTerm(tok);
         if (isSymbol(t,'+')){
-            //Bisa saja error;
             result = result + rhs;
         } else {
             result = result - rhs;
@@ -112,10 +115,6 @@ float parse(char s[100]){
 
     CreateEmpty(&toks);
     toks = tokenize(s);
-    /*while (!IsEmpty(toks)){
-        Pop(&toks,&tok);
-        printf("%f\n", tok.value);
-    }*/
     result = parseExpr(&toks);
     if (!isStop(InfoTop(toks))){
         printf("Empty Input, Exiting The Program....\n");
