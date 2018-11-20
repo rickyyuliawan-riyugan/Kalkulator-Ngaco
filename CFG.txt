@@ -1,15 +1,16 @@
 CFG (Sementara)
 
-Angka ex : 12 3 900 69.1 etc
-Digit -> 0 1 2 3 4 5 6 7 8 9 
-Symbol -> ^ * / + -
-Expression -> ESA | -A
-Parentheses -> ( )
-Comma -> .
-Iput -> =
+Number : 12 3 900 69.1 etc
+Digit : [0..9] 
+Symbol : ^ * / + -
+Expression
+Parentheses : ( )
+Comma : .
 
-I -> E=
-E -> ESA | -A | A | (E)
-A -> D | AD | A.A
-D -> 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-S -> ^ | * | / | + | -
+S -> E
+E -> T | T+T | T-T
+T -> F | F*F | F/F
+F -> I | I^F
+I -> N | (E) | -N
+N -> D | N.N | ND
+D -> [0..9]
