@@ -8,9 +8,9 @@ Parentheses : ( )
 Comma : .
 
 S -> E
-E -> T | T+T | T-T
+E -> T | T+T | T-T | (-T)
 T -> F | F*F | F/F
 F -> I | I^F
-I -> N | (E) | -N
+I -> N | (E) | (-N)
 N -> D | N.N | ND
 D -> [0..9]
